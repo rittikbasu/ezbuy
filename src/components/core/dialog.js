@@ -9,29 +9,9 @@ import React, {
 } from "react";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { createPortal } from "react-dom";
+import useClickOutside from "@/hooks/useClickOutside";
 import { cn } from "../../utils/cn";
 import { XIcon } from "lucide-react";
-
-export default function useClickOutside(elementRef, callback) {
-  React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      event.preventDefault();
-      if (
-        elementRef &&
-        elementRef.current &&
-        !elementRef.current.contains(event.target)
-      ) {
-        // Call Callback only if event happens outside element or descendent elements
-        callback();
-      }
-      return;
-    };
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  }, [elementRef, callback]);
-}
 
 const DialogContext = React.createContext(null);
 
@@ -196,7 +176,7 @@ function DialogContainer({ children }) {
         <>
           <motion.div
             key={`backdrop-${uniqueId}`}
-            className="fixed inset-0 h-full w-full bg-white/40 webkit-backdrop-blur-sm"
+            className="fixed inset-0 h-full w-full bg-white/40 z-40 webkit-backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
