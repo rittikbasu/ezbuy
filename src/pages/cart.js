@@ -2,12 +2,15 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import { CartContext } from "@/context/CartContext";
 import CartItem from "@/components/CartItem";
+import TransitionPanelCard from "@/components/TransitionPanelCard";
 import { toast } from "sonner";
+import { MoveRight } from "lucide-react";
 
 const CartPage = () => {
   const { cartItems, isCouponValid, setIsCouponValid } =
     useContext(CartContext);
   const [coupon, setCoupon] = useState("");
+  const [showCheckoutFlow, setShowCheckoutFlow] = useState(false);
 
   const handleCouponCheck = () => {
     if (coupon === "PROFILEFYI") {
@@ -99,11 +102,11 @@ const CartPage = () => {
               Price Details ({cartItems.length} Items)
             </h2>
             <div className="flex justify-between mb-2">
-              <span className="">Total MRP</span>
+              <span className="">Subtotal</span>
               <span className="">${calculateOriginalPrice().toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
-              <span className="">Discount on MRP</span>
+              <span className="">Discount</span>
               <span className=" text-green-600">
                 - ${calculateDiscount().toFixed(2)}
               </span>
@@ -130,6 +133,20 @@ const CartPage = () => {
               <span className="text-xl font-bold">
                 ${calculateFinalPrice().toFixed(2)}
               </span>
+            </div>
+            <div className="flex justify-end mt-4">
+              <button
+                className="h-9 px-3 border border-zinc-50/10 bg-zinc-700 outline-none text-white rounded-lg hover:bg-zinc-500 flex items-center justify-center"
+                onClick={() => setShowCheckoutFlow(true)}
+              >
+                Proceed to Checkout
+                <MoveRight className="ml-2" />
+              </button>
+              <TransitionPanelCard
+                visible={showCheckoutFlow}
+                onClose={() => setShowCheckoutFlow(false)}
+                price={calculateFinalPrice().toFixed(2)}
+              />
             </div>
           </div>
         </>
