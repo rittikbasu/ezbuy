@@ -12,6 +12,7 @@ import {
   DialogContainer,
 } from "@/components/core/dialog";
 import { PlusIcon, Eye, Check } from "lucide-react";
+import { toast } from "sonner";
 
 const ProductCard = ({ product, inCart }) => {
   const { addToCart } = useContext(CartContext);
@@ -25,6 +26,7 @@ const ProductCard = ({ product, inCart }) => {
     e.stopPropagation();
     addToCart(product);
     setIsAdded(true);
+    toast.success("Successfully added to cart.");
   };
   return (
     <Dialog
