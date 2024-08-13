@@ -1,10 +1,22 @@
 import { useContext } from "react";
 import Image from "next/image";
-import { CartContext } from "../context/CartContext";
+import { toast } from "sonner";
+import { CartContext } from "@/context/CartContext";
 
 const CartItem = ({ item }) => {
   const { removeFromCart, updateQuantity } = useContext(CartContext);
   const discountedPrice = item.price - item.discount;
+
+  const handleCounter = (itemId, currentQuantity, change) => {
+    const newQuantity = currentQuantity + change;
+    if (newQuantity > 4) {
+      toast.error("Maximum quantity of 4 reached");
+    } else if (newQuantity < 1) {
+      toast.error("Minimum quantity of 1 required");
+    } else {
+      updateQuantity(itemId, newQuantity);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between border-b py-4">
@@ -19,7 +31,7 @@ const CartItem = ({ item }) => {
         <div className="flex items-center space-x-2 border rounded-lg mt-2">
           <button
             className="w-8 px-2"
-            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+            onClick={() => handleCounter(item.id, item.quantity, -1)}
           >
             -
           </button>
@@ -28,7 +40,7 @@ const CartItem = ({ item }) => {
           </span>
           <button
             className="w-8 px-2"
-            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+            onClick={() => handleCounter(item.id, item.quantity, 1)}
           >
             +
           </button>

@@ -4,6 +4,7 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [isCouponValid, setIsCouponValid] = useState(false);
 
   const addToCart = (product) => {
     const existingItem = cartItems.find((item) => item.id === product.id);
@@ -36,7 +37,14 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, updateQuantity }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        isCouponValid,
+        setIsCouponValid,
+      }}
     >
       {children}
     </CartContext.Provider>

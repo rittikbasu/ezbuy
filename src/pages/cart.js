@@ -2,36 +2,38 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import { CartContext } from "@/context/CartContext";
 import CartItem from "@/components/CartItem";
+import { toast } from "sonner";
 
 const CartPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, isCouponValid, setIsCouponValid } =
+    useContext(CartContext);
   const [coupon, setCoupon] = useState("");
-  const [isCouponValid, setIsCouponValid] = useState(false);
-  const [couponError, setCouponError] = useState("");
 
-  const handleCouponCheck = (coupon) => {
-    if (coupon === "profilefyi") {
+  const handleCouponCheck = () => {
+    if (coupon === "PROFILEFYI") {
       setCoupon("");
       setIsCouponValid(true);
-      setCouponError("");
+      toast.success("Coupon code applied successfully.");
     } else {
       setIsCouponValid(false);
-      setCouponError("Invalid coupon code.");
+      toast.error("Invalid coupon code.");
     }
   };
 
-  const calculateSubtotal = () => {
+  const calculateFinalPrice = () => {
     const subtotal = cartItems.reduce((sum, item) => {
       const discount = item.discount || 0;
       const discountedPrice = item.price - discount;
       return sum + discountedPrice * item.quantity;
     }, 0);
 
-    if (coupon.toLowerCase() === "profilefyi") {
-      return subtotal * 0.9;
+    const platform_fee = 2;
+
+    if (isCouponValid) {
+      return subtotal * 0.9 + platform_fee;
     }
 
-    return subtotal;
+    return subtotal + platform_fee;
   };
 
   const calculateOriginalPrice = () =>
@@ -45,10 +47,10 @@ const CartPage = () => {
 
   return (
     <div className="mx-auto p-4 mt-20 sm:mt-28">
-      <Link href="/" className="text-blue-500 hover:underline mb-4 block">
+      <Link href="/" className="text-blue-500 hover:underline mb-6 block">
         &larr; Back to Products
       </Link>
-      <h1 className="text-3xl text-zinc-700 font-bold mb-6">Your Cart</h1>
+      <h1 className="text-3xl text-zinc-700 font-bold mb-4">Your Cart</h1>
       {cartItems.length === 0 ? (
         <div className="flex justify-center items-center min-h-[60vh]">
           <video
@@ -79,21 +81,19 @@ const CartPage = () => {
                 onChange={(e) => setCoupon(e.target.value.toUpperCase())}
                 className="flex-grow p-2 focus:outline-none"
                 placeholder="Enter coupon code"
+                maxLength={15}
               />
               <button
-                className={`p-2 bg-lime-400 text-white ${
-                  isCouponValid
+                className={`p-2 w-20 bg-lime-400 text-white ${
+                  !isCouponValid && coupon !== ""
                     ? "hover:bg-lime-500"
                     : "opacity-50 cursor-not-allowed"
                 }`}
-                disabled={!isCouponValid}
+                disabled={isCouponValid || coupon === ""}
                 onClick={handleCouponCheck}
               >
                 Apply
               </button>
-              {couponError && (
-                <p className="text-red-500 mt-2">{couponError}</p>
-              )}
             </div>
             <h2 className="text-lg font-semibold mb-4">
               Price Details ({cartItems.length} Items)
@@ -112,7 +112,7 @@ const CartPage = () => {
               <div className="flex justify-between mb-2">
                 <span className="">Coupon Discount</span>
                 <span className="text-green-600">
-                  {coupon.toLowerCase() === "profilefyi" ? "- 10%" : "- $0.00"}
+                  - ${((calculateFinalPrice() / 0.9) * 0.1).toFixed(2)}
                 </span>
               </div>
             )}
@@ -128,7 +128,7 @@ const CartPage = () => {
             <div className="flex justify-between mt-2">
               <span className="text-xl font-bold">Total Amount</span>
               <span className="text-xl font-bold">
-                ${(calculateSubtotal() + 20).toFixed(2)}
+                ${calculateFinalPrice().toFixed(2)}
               </span>
             </div>
           </div>
