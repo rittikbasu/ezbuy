@@ -28,18 +28,18 @@ const CartItem = ({ item }) => {
           height={100}
           className="h-24 w-24 object-contain"
         />
-        <div className="flex items-center space-x-2 border rounded-lg mt-2">
+        <div className="flex items-center border rounded-lg mt-2">
           <button
-            className="w-8 px-2"
+            className="w-10"
             onClick={() => handleCounter(item.id, item.quantity, -1)}
           >
             -
           </button>
-          <span className="px-2 border-l border-r w-8 text-center">
+          <span className="border-l border-r w-8 text-center">
             {item.quantity}
           </span>
           <button
-            className="w-8 px-2"
+            className="w-10"
             onClick={() => handleCounter(item.id, item.quantity, 1)}
           >
             +
