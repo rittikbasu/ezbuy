@@ -1,13 +1,20 @@
+import { useContext } from "react";
 import ProductCard from "@/components/ProductCard";
+import { CartContext } from "@/context/CartContext";
 
 const HomePage = ({ products }) => {
+  const { cartItems } = useContext(CartContext);
+
   return (
-    <div className="container mx-auto p-4 mt-28">
-      <h1 className="text-3xl font-bold mb-6">Most Popular</h1>
+    <div className="container mx-auto p-4 mt-20 sm:mt-28">
+      <h1 className="text-3xl text-zinc-700 font-bold mb-6">Most Popular</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products.map((product) => {
+          const isAdded = cartItems.some((item) => item.id === product.id);
+          return (
+            <ProductCard key={product.id} product={product} inCart={isAdded} />
+          );
+        })}
       </div>
     </div>
   );
