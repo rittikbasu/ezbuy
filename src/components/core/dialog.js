@@ -196,7 +196,7 @@ function DialogContainer({ children }) {
         <>
           <motion.div
             key={`backdrop-${uniqueId}`}
-            className="fixed inset-0 h-full w-full bg-white/40 backdrop-blur-sm"
+            className="fixed inset-0 h-full w-full bg-white/40 webkit-backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
