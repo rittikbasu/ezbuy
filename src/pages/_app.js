@@ -1,17 +1,29 @@
 import "@/styles/globals.css";
+import Head from "next/head";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
 import Header from "@/components/Header";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className="max-w-7xl mx-auto">
-      <CartProvider>
-        <Header />
-        <Component {...pageProps} />
-        <Toaster position="top-center" richColors={true} closeButton={true} />
-      </CartProvider>
-    </div>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.webp" type="image/webp" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="A premium shopping experience with a beautifully designed interface & buttery smooth animations that make you go wow every time."
+        />
+        <meta name="theme-color" content="#ffffff" />
+      </Head>
+      <div className="max-w-7xl mx-auto">
+        <CartProvider>
+          <Header />
+          <Component {...pageProps} />
+          <Toaster position="top-center" richColors={true} closeButton={true} />
+        </CartProvider>
+      </div>
+    </>
   );
 }
 
