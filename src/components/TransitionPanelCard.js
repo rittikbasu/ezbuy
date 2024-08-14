@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { TransitionPanel } from "@/components/core/transition-panel";
 import useMeasure from "react-use-measure";
-import { toast } from "sonner";
 
 function Button({ onClick, disabled, children }) {
   return (
