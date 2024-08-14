@@ -63,18 +63,22 @@ const ProductCard = ({ product, inCart }) => {
               )}
             </div>
             <button
-              className={`flex items-center outline-nonei ${
+              className={`flex items-center outline-none ${
                 isAdded
                   ? "bg-gray-400"
                   : "bg-lime-500 group-hover:animate-tilt-shaking"
               } text-white px-2 py-0.5 rounded-lg`}
               onClick={handleAddToCart}
               disabled={isAdded}
+              style={{
+                width: isAdded ? "90px" : "120px",
+                transition: "width 0.3s ease",
+              }}
             >
               {isAdded ? (
                 <>
                   <Check size={16} className="mr-1" />
-                  Added to Cart
+                  In Cart
                 </>
               ) : (
                 <>
@@ -85,7 +89,7 @@ const ProductCard = ({ product, inCart }) => {
             </button>
           </div>
         </div>
-        <div className="absolute top-2 right-2 border border-zinc-200 bg-zinc-50 rounded-full p-1">
+        <div className="absolute top-2 right-2 border border-zinc-100 bg-white shadow-sm rounded-full p-1">
           <Eye size={28} className="text-zinc-400" />
         </div>
         {product.onSale && (
@@ -101,12 +105,17 @@ const ProductCard = ({ product, inCart }) => {
           }}
           className="pointer-events-auto relative flex max-h-[600px] sm:max-h-[800px] sm:w-[500px] w-full flex-col overflow-hidden border border-zinc-950/10 bg-white mx-2"
         >
-          <div className="flex-1 overflow-y-auto mb-14 sm:mb-16">
+          <div className="flex-1 overflow-y-auto scrollbar-hide mb-14 sm:mb-16">
             <DialogImage
               src={product.image}
               alt={product.title}
               className="h-56 sm:h-72 w-full object-contain p-2"
             />
+            {product.onSale && (
+              <span className="absolute top-3 left-3 mr-2 bg-red-500 text-white px-4 py-0.5 rounded-full">
+                Sale
+              </span>
+            )}
             <div className="p-6 bg-zinc-100">
               <DialogTitle className="text-xl text-zinc-950">
                 {product.title}
@@ -135,16 +144,20 @@ const ProductCard = ({ product, inCart }) => {
               )}
             </div>
             <button
-              className={`flex items-center outline-none active:scale-50 transition duration-300 ${
+              className={`flex items-center outline-none ${
                 isAdded ? "bg-gray-400" : "bg-lime-500"
               } text-white px-4 py-2 rounded-xl`}
               onClick={handleAddToCart}
               disabled={isAdded}
+              style={{
+                width: isAdded ? "107px" : "142px",
+                transition: "width 0.3s ease",
+              }}
             >
               {isAdded ? (
                 <>
                   <Check size={18} className="mr-2" />
-                  Added to Cart
+                  In Cart
                 </>
               ) : (
                 <>
