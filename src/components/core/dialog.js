@@ -275,13 +275,16 @@ function DialogClose({ children, className, variants }) {
       type="button"
       aria-label="Close dialog"
       key={`dialog-close-${uniqueId}`}
-      className={cn("absolute right-6 top-6", className)}
+      className={cn(
+        "absolute right-3 top-3 p-1 bg-white border border-zinc-100 shadow-sm rounded-full",
+        className
+      )}
       initial="initial"
       animate="animate"
       exit="exit"
       variants={variants}
     >
-      {children || <XIcon size={24} />}
+      {children || <XIcon size={28} className="text-zinc-500" />}
     </motion.button>
   );
 }
