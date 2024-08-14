@@ -20,7 +20,16 @@ function MyApp({ Component, pageProps }) {
         <CartProvider>
           <Header />
           <Component {...pageProps} />
-          <Toaster position="top-center" richColors={true} closeButton={true} />
+          <Toaster
+            position="bottom-center"
+            richColors={true}
+            closeButton={true}
+            toastOptions={{
+              style: {
+                borderRadius: "12px",
+              },
+            }}
+          />
         </CartProvider>
       </div>
     </>
