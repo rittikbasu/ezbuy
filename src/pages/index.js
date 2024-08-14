@@ -19,33 +19,35 @@ const HomePage = ({ products }) => {
         <title>EzBuy - A Premium Shopping Experience</title>
       </Head>
       <div className="container mx-auto p-4 mt-20 sm:mt-28">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-          <h1 className="text-3xl text-zinc-700 font-bold mb-4 lg:mb-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+          <h1 className="text-3xl text-zinc-700 font-bold mb-4 sm:mb-0">
             Most Popular
           </h1>
 
-          <div className="bg-amber-100 text-yellow-800 p-4 rounded-xl flex items-center justify-between w-full lg:w-auto">
+          <div className="bg-lime-100 text-lime-800 p-4 rounded-xl flex items-center justify-between w-full sm:w-auto">
             <p className="font-semibold mr-4">
               Get 10% off using code{" "}
               <span className="font-bold">PROFILEFYI</span>
             </p>
             <Copy
-              className="cursor-pointer w-5 h-5 text-yellow-800 hover:text-yellow-600 ml-auto"
+              className="cursor-pointer w-5 h-5 text-lime-800 hover:text-lime-600 ml-auto"
               onClick={copyToClipboard}
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product) => {
-            const isAdded = cartItems.some((item) => item.id === product.id);
-            return (
-              <ProductCard
-                key={product.id}
-                product={product}
-                inCart={isAdded}
-              />
-            );
-          })}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            {products.map((product) => {
+              const isAdded = cartItems.some((item) => item.id === product.id);
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  inCart={isAdded}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
@@ -56,10 +58,10 @@ export default HomePage;
 
 export async function getStaticProps() {
   const categories = [
-    "tv",
-    "audio",
-    "laptop",
     "mobile",
+    "audio",
+    "tv",
+    "laptop",
     "gaming",
     "appliances",
   ];
