@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { TransitionPanel } from "@/components/core/transition-panel";
 import useMeasure from "react-use-measure";
+import { TransitionPanel } from "@/components/framer/transition-panel";
 
 function Button({ onClick, disabled, children }) {
   return (
@@ -16,8 +16,8 @@ function Button({ onClick, disabled, children }) {
   );
 }
 
-export default function TransitionPanelCard({ visible, onClose, price }) {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function CheckoutPanel({ visible, onClose, price }) {
+  const [activePanelIndex, setActivePanelIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -32,16 +32,16 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
     setSelectedAddress(index);
   };
 
-  const isNextEnabled = () => {
-    if (activeIndex === 0) return selectedAddress !== null;
-    if (activeIndex === 1) return selectedCard !== null;
-    if (activeIndex === 2) return cvv.length === 3;
+  const isNextBtnEnabled = () => {
+    if (activePanelIndex === 0) return selectedAddress !== null;
+    if (activePanelIndex === 1) return selectedCard !== null;
+    if (activePanelIndex === 2) return cvv.length === 3;
     return true;
   };
 
   const handleClose = () => {
     onClose();
-    setActiveIndex(0);
+    setActivePanelIndex(0);
     setSelectedCard(null);
     setSelectedAddress(null);
     setCvv("");
@@ -70,7 +70,7 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
               <div
                 key={index}
                 className={`flex items-center justify-between p-4 rounded-2xl bg-zinc-100 border ${
-                  selectedAddress === index ? "border-blue-500" : ""
+                  selectedAddress === index && "border-blue-500"
                 }`}
                 onClick={() => handleAddressSelect(index)}
               >
@@ -98,7 +98,7 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
           <div className="space-y-4">
             {[
               {
-                src: "https://cdn0.iconfinder.com/data/icons/shift-ecommerce/32/Maestro-512.png",
+                src: "https://cdn3.iconfinder.com/data/icons/payment-method-1/64/_Citi-128.png",
                 alt: "Debit Card",
                 label: "Debit Card",
                 number: "5234 •••• •••• 4761",
@@ -158,12 +158,17 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
             upon successfully entering the CVV.
           </p>
           <input
-            type="number"
+            type="tel"
             placeholder="Enter CVV"
             className="mb-2 w-full outline-none rounded-xl border p-2"
             maxLength={3}
             value={cvv}
-            onChange={(e) => setCvv(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d*$/.test(value) && value.length <= 3) {
+                setCvv(value);
+              }
+            }}
           />
         </div>
       ),
@@ -183,14 +188,14 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
   ];
 
   const handleSetActiveIndex = (newIndex) => {
-    setDirection(newIndex > activeIndex ? 1 : -1);
-    setActiveIndex(newIndex);
+    setDirection(newIndex > activePanelIndex ? 1 : -1);
+    setActivePanelIndex(newIndex);
   };
 
   useEffect(() => {
-    if (activeIndex < 0) setActiveIndex(0);
-    if (activeIndex >= STEPS.length) setActiveIndex(STEPS.length - 1);
-  }, [activeIndex]);
+    if (activePanelIndex < 0) setActivePanelIndex(0);
+    if (activePanelIndex >= STEPS.length) setActivePanelIndex(STEPS.length - 1);
+  }, [activePanelIndex]);
 
   if (!visible) return null;
 
@@ -198,7 +203,7 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
     <div className="fixed inset-0 flex items-center justify-center bg-white/70 z-40 webkit-backdrop-blur">
       <div className="sm:w-[550px] w-full mx-2 overflow-hidden rounded-xl border border-zinc-950/10 bg-white">
         <TransitionPanel
-          activeIndex={activeIndex}
+          activeIndex={activePanelIndex}
           variants={{
             enter: (direction) => ({
               x: direction > 0 ? 364 : -364,
@@ -234,19 +239,21 @@ export default function TransitionPanelCard({ visible, onClose, price }) {
           ))}
         </TransitionPanel>
         <div className="flex justify-between p-4">
-          {activeIndex > 0 && activeIndex < STEPS.length - 1 ? (
-            <Button onClick={() => handleSetActiveIndex(activeIndex - 1)}>
+          {activePanelIndex > 0 && activePanelIndex < STEPS.length - 1 ? (
+            <Button onClick={() => handleSetActiveIndex(activePanelIndex - 1)}>
               Previous
             </Button>
           ) : (
-            activeIndex === 0 && <Button onClick={handleClose}>Close</Button>
+            activePanelIndex === 0 && (
+              <Button onClick={handleClose}>Close</Button>
+            )
           )}
-          {activeIndex === STEPS.length - 1 ? (
+          {activePanelIndex === STEPS.length - 1 ? (
             <Button onClick={handleClose}>Close</Button>
           ) : (
             <Button
-              onClick={() => handleSetActiveIndex(activeIndex + 1)}
-              disabled={!isNextEnabled()}
+              onClick={() => handleSetActiveIndex(activePanelIndex + 1)}
+              disabled={!isNextBtnEnabled()}
             >
               Next
             </Button>
