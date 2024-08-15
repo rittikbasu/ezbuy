@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { CartContext } from "../context/CartContext";
+import { CartContext } from "@/context/CartContext";
 import {
   Dialog,
   DialogTrigger,
@@ -10,7 +10,7 @@ import {
   DialogClose,
   DialogDescription,
   DialogContainer,
-} from "@/components/core/dialog";
+} from "@/components/framer/dialog";
 import { PlusIcon, Eye, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -26,22 +26,12 @@ const ProductCard = ({ product, inCart }) => {
     e.stopPropagation();
     addToCart(product);
     setIsAdded(true);
-    toast.success("Successfully added to cart.");
+    toast.success("Successfully added to cart.", { duration: 2000 });
   };
+
   return (
-    <Dialog
-      transition={{
-        type: "spring",
-        bounce: 0.05,
-        duration: 0.25,
-      }}
-    >
-      <DialogTrigger
-        style={{
-          borderRadius: "12px",
-        }}
-        className="flex sm:max-w-[300px] flex-col overflow-hidden border border-zinc-950/10 bg-white group"
-      >
+    <Dialog transition={{ type: "spring", bounce: 0.05, duration: 0.25 }}>
+      <DialogTrigger className="flex sm:max-w-[300px] flex-col overflow-hidden border border-zinc-950/10 bg-white group rounded-xl">
         <DialogImage
           src={product.image}
           alt={product.title}
@@ -67,13 +57,10 @@ const ProductCard = ({ product, inCart }) => {
                 isAdded
                   ? "bg-gray-400"
                   : "bg-lime-500 group-hover:animate-tilt-shaking"
-              } text-white px-2 py-0.5 rounded-lg`}
+              } text-white px-2 py-0.5 rounded-lg duration-300 ease-in-out`}
               onClick={handleAddToCart}
               disabled={isAdded}
-              style={{
-                width: isAdded ? "90px" : "120px",
-                transition: "width 0.3s ease",
-              }}
+              style={{ width: isAdded ? "90px" : "120px" }}
             >
               {isAdded ? (
                 <>
@@ -93,26 +80,21 @@ const ProductCard = ({ product, inCart }) => {
           <Eye size={28} className="text-zinc-400" />
         </div>
         {product.onSale && (
-          <span className="absolute top-2 left-2 mr-2 bg-red-500 text-white px-4 py-0.5 rounded-full">
+          <span className="absolute top-2 left-2 bg-red-500 text-white px-4 py-0.5 rounded-full">
             Sale
           </span>
         )}
       </DialogTrigger>
       <DialogContainer>
-        <DialogContent
-          style={{
-            borderRadius: "24px",
-          }}
-          className="pointer-events-auto relative flex max-h-[600px] sm:max-h-[800px] sm:w-[500px] w-full flex-col overflow-hidden border border-zinc-950/10 bg-white mx-2"
-        >
-          <div className="flex-1 overflow-y-auto scrollbar-hide mb-14 sm:mb-16">
+        <DialogContent className="pointer-events-auto relative flex max-h-[600px] sm:max-h-[800px] sm:w-[500px] w-full flex-col overflow-hidden border border-zinc-950/10 bg-white mx-2 rounded-2xl">
+          <div className="relative flex-1 overflow-y-auto scrollbar-hide mb-14 sm:mb-16">
             <DialogImage
               src={product.image}
               alt={product.title}
               className="h-56 sm:h-72 w-full object-contain p-2"
             />
             {product.onSale && (
-              <span className="absolute top-3 left-3 mr-2 bg-red-500 text-white px-4 py-0.5 rounded-full">
+              <span className="absolute top-3 left-3 bg-red-500 text-white px-4 py-0.5 rounded-full">
                 Sale
               </span>
             )}
@@ -120,6 +102,7 @@ const ProductCard = ({ product, inCart }) => {
               <DialogTitle className="text-xl text-zinc-950">
                 {product.title}
               </DialogTitle>
+              <p className="text-zinc-500 mt-1 capitalize">{product.brand}</p>
               <DialogDescription
                 disableLayoutAnimation
                 variants={{
@@ -146,13 +129,10 @@ const ProductCard = ({ product, inCart }) => {
             <button
               className={`flex items-center outline-none ${
                 isAdded ? "bg-gray-400" : "bg-lime-500"
-              } text-white px-4 py-2 rounded-xl`}
+              } text-white px-4 py-2 rounded-xl duration-300 ease-in-out`}
               onClick={handleAddToCart}
               disabled={isAdded}
-              style={{
-                width: isAdded ? "107px" : "142px",
-                transition: "width 0.3s ease",
-              }}
+              style={{ width: isAdded ? "107px" : "142px" }}
             >
               {isAdded ? (
                 <>
