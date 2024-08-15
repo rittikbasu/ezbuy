@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
         />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto mb-8">
         <CartProvider>
           <Header />
           <Component {...pageProps} />
