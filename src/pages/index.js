@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import Head from "next/head";
 import { Copy } from "lucide-react";
+import { toast } from "sonner";
 import ProductCard from "@/components/ProductCard";
 import { CartContext } from "@/context/CartContext";
-import { toast } from "sonner";
 
 const HomePage = ({ products }) => {
   const { cartItems } = useContext(CartContext);
 
-  const copyToClipboard = () => {
+  const copyCouponToClipboard = () => {
     navigator.clipboard.writeText("PROFILEFYI");
     toast.success("Coupon code copied to clipboard.");
   };
@@ -16,7 +16,7 @@ const HomePage = ({ products }) => {
   return (
     <>
       <Head>
-        <title>EzBuy - A Premium Shopping Experience</title>
+        <title>EzBuy | A Premium Shopping Experience</title>
       </Head>
       <div className="container mx-auto p-4 mt-20 sm:mt-28">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -31,7 +31,7 @@ const HomePage = ({ products }) => {
             </p>
             <Copy
               className="cursor-pointer w-5 h-5 text-lime-800 hover:text-lime-600 ml-auto"
-              onClick={copyToClipboard}
+              onClick={copyCouponToClipboard}
             />
           </div>
         </div>
@@ -60,9 +60,9 @@ export async function getStaticProps() {
   const categories = [
     "mobile",
     "audio",
+    "gaming",
     "tv",
     "laptop",
-    "gaming",
     "appliances",
   ];
   const products = [];
