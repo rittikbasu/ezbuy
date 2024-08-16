@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import useMeasure from "react-use-measure";
+import { CartContext } from "@/context/CartContext";
 import { TransitionPanel } from "@/components/framer/transition-panel";
 
 function Button({ onClick, disabled, children }) {
@@ -22,7 +24,10 @@ export default function CheckoutPanel({ visible, onClose, price }) {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [cvv, setCvv] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [ref, bounds] = useMeasure();
+  const { clearCart } = useContext(CartContext);
+  const router = useRouter();
 
   const handleCardSelect = (index) => {
     setSelectedCard(index);
@@ -39,8 +44,25 @@ export default function CheckoutPanel({ visible, onClose, price }) {
     return true;
   };
 
+  const handleNextClick = () => {
+    if (activePanelIndex === 2) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        handleSetActiveIndex(activePanelIndex + 1);
+      }, 2000);
+    } else {
+      handleSetActiveIndex(activePanelIndex + 1);
+    }
+  };
+
   const handleClose = () => {
-    onClose();
+    if (activePanelIndex === STEPS.length - 1) {
+      clearCart();
+      router.push("/");
+    } else {
+      onClose();
+    }
     setActivePanelIndex(0);
     setSelectedCard(null);
     setSelectedAddress(null);
@@ -252,10 +274,17 @@ export default function CheckoutPanel({ visible, onClose, price }) {
             <Button onClick={handleClose}>Close</Button>
           ) : (
             <Button
-              onClick={() => handleSetActiveIndex(activePanelIndex + 1)}
-              disabled={!isNextBtnEnabled()}
+              onClick={handleNextClick}
+              disabled={isLoading || !isNextBtnEnabled()}
             >
-              Next
+              {isLoading ? (
+                <div className="flex items-center">
+                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"></div>
+                  <span className="ml-2">Verifying</span>
+                </div>
+              ) : (
+                "Next"
+              )}
             </Button>
           )}
         </div>
