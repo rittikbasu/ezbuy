@@ -4,8 +4,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
 import Header from "@/components/Header";
+import { AnimatePresence, motion } from "framer-motion";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   return (
     <>
       <Head>
@@ -20,7 +21,17 @@ function MyApp({ Component, pageProps }) {
       <div className="max-w-7xl mx-auto mb-8">
         <CartProvider>
           <Header />
-          <Component {...pageProps} />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={router.route}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Component {...pageProps} />
+            </motion.div>
+          </AnimatePresence>
           <Toaster
             position="bottom-center"
             richColors={true}
