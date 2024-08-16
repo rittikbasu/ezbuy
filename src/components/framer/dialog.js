@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { createPortal } from "react-dom";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -252,13 +253,15 @@ function DialogImage({ src, alt, className, style }) {
   const { uniqueId } = useDialog();
 
   return (
-    <motion.img
-      src={src}
-      alt={alt}
-      className={cn(className)}
-      layoutId={`dialog-img-${uniqueId}`}
-      style={style}
-    />
+    <motion.div layoutId={`dialog-img-${uniqueId}`} style={style}>
+      <Image
+        src={src}
+        alt={alt}
+        width={300}
+        height={300}
+        className={cn(className)}
+      />
+    </motion.div>
   );
 }
 
