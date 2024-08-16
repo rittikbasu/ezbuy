@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
 import Header from "@/components/Header";
@@ -32,6 +33,7 @@ function MyApp({ Component, pageProps }) {
           />
         </CartProvider>
       </div>
+      <Analytics />
     </>
   );
 }
