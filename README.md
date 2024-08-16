@@ -2,7 +2,7 @@
 
 EzBuy is an e-commerce application built with Next.js. Developed as part of a coding assignment for [profile.fyi](https://profile.fyi), this project features a clean and minimal product listing page, an intuitive cart system with native app like animations and interactions, allowing users to browse electronics, add them to cart and manage their selections.
 
-![EzBuy Landing Page](<https://ik.imagekit.io/zwcfsadeijm/250_3x_shots_so_4ubHT6mLM.png>)
+![EzBuy Landing Page](https://ik.imagekit.io/zwcfsadeijm/250_3x_shots_so_4ubHT6mLM.png)
 
 ## Features
 
@@ -19,7 +19,7 @@ EzBuy is an e-commerce application built with Next.js. Developed as part of a co
 - **Quantity Control**: Modify item quantities with intuitive controls, including safeguards to prevent invalid quantities.
 - **Remove Items**: Effortlessly remove products from the cart with a single click.
 - **Coupon Codes**: Apply coupon codes directly within the cart to unlock additional savings.
-- **Cart Summary**: Get a dynamic cart summary that updates in real time as you apply coupon codes or change item quantities, reflecting changes in subtotal, discounts, additional fees, and the final total. 
+- **Cart Summary**: Get a dynamic cart summary that updates in real time as you apply coupon codes or change item quantities, reflecting changes in subtotal, discounts, additional fees, and the final total.
 - **Checkout**: Experience a simulated checkout process, complete with address and payment card selection for a realistic shopping experience.
 
 ## Tech Stack
@@ -33,7 +33,8 @@ EzBuy is an e-commerce application built with Next.js. Developed as part of a co
 ## Potential Upgrades
 
 These are a few features I think could really enhance the user experience
-- [ ] **Persisting Cart Data**: Use local storage to keep cart items saved across sessions, ensuring users don't lose their selections.
+
+- [x] **Persisting Cart Data**: Use local storage to keep cart items saved across sessions, ensuring users don't lose their selections.
 - [ ] **Search and Filters**: Introduce full text search and filters to make finding and sorting products easier and more efficient.
 - [ ] **Semantic Search**: Implement semantic search to display relevant products even when user queries don't exactly match product names.
 
