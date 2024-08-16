@@ -30,6 +30,13 @@ EzBuy is an e-commerce application built with Next.js. Developed as part of a co
 - **Data Source**: [FakeStoreAPI](https://fakestoreapi.in/), an open source api for dummy product data
 - **Analytics**: Vercel Analytics
 
+## Potential Upgrades
+
+These are a few features I think could really enhance the user experience
+- [ ] **Persisting Cart Data**: Use local storage to keep cart items saved across sessions, ensuring users don't lose their selections.
+- [ ] **Search and Filters**: Introduce full text search and filters to make finding and sorting products easier and more efficient.
+- [ ] **Semantic Search**: Implement semantic search to display relevant products even when user queries don't exactly match product names.
+
 ## Getting Started
 
 1. Clone the repository:
