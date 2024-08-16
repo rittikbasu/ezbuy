@@ -30,7 +30,7 @@ const HomePage = ({ products }) => {
               <span className="font-bold">PROFILEFYI</span>
             </p>
             <Copy
-              className="cursor-pointer w-5 h-5 text-lime-800 hover:text-lime-600 ml-auto"
+              className="cursor-pointer w-5 h-5 text-lime-800 hover:text-lime-600 ml-auto active:scale-50 transition duration-300"
               onClick={copyCouponToClipboard}
             />
           </div>
