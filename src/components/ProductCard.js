@@ -24,6 +24,8 @@ const ProductCard = ({ product, inCart }) => {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
+    const audio = new Audio("/sound_effects/trumpet_fanfare.mp3");
+    audio.play();
     addToCart(product);
     setIsAdded(true);
     toast.success("Successfully added to cart.", { duration: 2000 });

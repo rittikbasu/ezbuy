@@ -50,6 +50,9 @@ export default function CheckoutPanel({ visible, onClose, price }) {
       setTimeout(() => {
         setIsLoading(false);
         handleSetActiveIndex(activePanelIndex + 1);
+
+        const audio = new Audio("/sound_effects/chaching.mp3");
+        audio.play();
       }, 2000);
     } else {
       handleSetActiveIndex(activePanelIndex + 1);
