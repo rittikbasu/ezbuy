@@ -1,5 +1,5 @@
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { ShoppingCart } from "lucide-react";
 
@@ -7,12 +7,18 @@ const Header = () => {
   const { cartItems } = useContext(CartContext);
   const [audio, setAudio] = useState(null);
 
-  if (typeof window !== "undefined" && !audio) {
-    setAudio(new Audio("/sound_effects/click.mp3"));
-  }
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const audioElement = new Audio("/sound_effects/click.mp3");
+      audioElement.preload = "metadata";
+      setAudio(audioElement);
+    }
+  }, []);
 
   const playSound = () => {
-    audio.play();
+    if (audio) {
+      audio.play();
+    }
   };
 
   return (
@@ -20,13 +26,13 @@ const Header = () => {
       <div className="flex justify-between items-center xl:max-w-7xl lg:max-w-5xl md:max-w-3xl py-2 px-8 sm:py-4 sm:px-16 bg-zinc-100/80 border webkit-backdrop-blur rounded-full mx-auto xl:mx-0">
         <h1
           className="sm:text-3xl text-zinc-700 text-2xl font-bold font-mono active:scale-50 transition duration-300"
-          onMouseDown={playSound}
+          onClick={playSound}
         >
           <Link href="/">EzBuy</Link>
         </h1>
         <div
           className="relative active:scale-50 transition duration-300"
-          onMouseDown={playSound}
+          onClick={playSound}
         >
           <Link href="/cart">
             <ShoppingCart className="text-zinc-700 h-7 w-7 sm:h-8 sm:w-8" />
