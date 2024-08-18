@@ -1,11 +1,15 @@
 import Link from "next/link";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { ShoppingCart } from "lucide-react";
 
 const Header = () => {
   const { cartItems } = useContext(CartContext);
-  const audio = new Audio("/sound_effects/click.mp3");
+  const [audio, setAudio] = useState(null);
+
+  if (typeof window !== "undefined" && !audio) {
+    setAudio(new Audio("/sound_effects/click.mp3"));
+  }
 
   const playSound = () => {
     audio.play();
