@@ -5,9 +5,9 @@ import { ShoppingCart } from "lucide-react";
 
 const Header = () => {
   const { cartItems } = useContext(CartContext);
+  const audio = new Audio("/sound_effects/click.mp3");
 
   const playSound = () => {
-    const audio = new Audio("/sound_effects/click.mp3");
     audio.play();
   };
 
